@@ -1,13 +1,23 @@
 # FedART: A Neural Model Integrating Federated Learning with Adaptive Resonance Theory
 This is the source code for FedART (paper under review in IEEE TNNLS).
 
-Description: Federated Learning (FL) is a privacy-aware machine learning paradigm wherein multiple clients combine their locally learned models into a single global model without divulging their private data. However, current FL methods typically assume the use of a fixed network architecture across all the local and global models and they are unable to adapt the architecture of the individual models according to the local data, which is especially important for data that is not Independent and Identically Distributed (non-IID) across different clients. To address this limitation, we propose a novel FL method called Federated Adaptive Resonance Theory (FedART) which leverages the adaptive abilities of self-organizing Adaptive Resonance Theory (ART) neural network models. Based on ART, the client and global models in FedART dynamically adjust and expand their internal structure without being restricted to a predefined static architecture, providing architectural adaptability. In addition, FedART employs a universal learning mechanism that enables both federated clustering, by associating inputs to automatically growing categories, as well as federated classification by coassociating data and class labels. Our experiments conducted on various federated classification and clustering tasks show that FedART consistently outperforms state-of-the-art FL methods for data with non-IID distribution across clients.
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Code Organization](#code-org)
+3. [Communication Method](#comms)
+4. [What you need to change for your own dataset](#customization)
+5. [How to run everything manually](#manual-run)
+6. [How to run everything using automated scripts](#auto-run)
+7. [License](#license)
+
+## Introduction <a name="introduction"></a>
+Federated Learning (FL) is a privacy-aware machine learning paradigm wherein multiple clients combine their locally learned models into a single global model without divulging their private data. However, current FL methods typically assume the use of a fixed network architecture across all the local and global models and they are unable to adapt the architecture of the individual models according to the local data, which is especially important for data that is not Independent and Identically Distributed (non-IID) across different clients. To address this limitation, we propose a novel FL method called Federated Adaptive Resonance Theory (FedART) which leverages the adaptive abilities of self-organizing Adaptive Resonance Theory (ART) neural network models. Based on ART, the client and global models in FedART dynamically adjust and expand their internal structure without being restricted to a predefined static architecture, providing architectural adaptability. In addition, FedART employs a universal learning mechanism that enables both federated clustering, by associating inputs to automatically growing categories, as well as federated classification by coassociating data and class labels. Our experiments conducted on various federated classification and clustering tasks show that FedART consistently outperforms state-of-the-art FL methods for data with non-IID distribution across clients.
 
 **FedART can be run for single or multiple rounds.**
 
 ![FedART Federated Learning Architecture](FedART.png)
 
-## Code Organization:
+## Code Organization <a name="code-org"></a>
 In the following discussion, `<dataset>` is used as a placeholder for dataset name.
 - `fedart_supervised_learning` directory contains the data and source code related to supervised learning (classification).
      - `data/<dataset>` contains the dataset in .csv or .hd5 format. `data/<dataset>/prep_data.py` is used to extract data and save in the .csv file. If you add a new dataset, please implement `data/<dataset>/prep_data.py` for it.
@@ -21,16 +31,16 @@ In the following discussion, `<dataset>` is used as a placeholder for dataset na
        -  `server_runner.py` runs the federated learning server process. The server connects to the clients using sockets.
      - `FedART` directory contains the implementation of the FedART server, FedART clients, and the underlying Fusion ART model (see `Base` directory).
 
-## Communication Method
+## Communication Method <a name="comms"></a>
 We use simple socket communication for bi-directional send and receive between various clients and server. The clients run in parallel using multiprocessing.
 
-## What you need to change for your own dataset
+## What you need to change for your own dataset <a name="customization"></a>
 1. Add your dataset to the `fedart_supervised_learning/data/<dataset>` directory. Extract the data as a Pandas dataframe and save as a .csv or .hd5 file.
 2. Provide the arguments or parameters corresponding to the dataset in the `setup_fl.py` file under `get_args` function by using an _if_ statement `if args.dataset == '<dataset>'`.
 
 That's it! You are good to go!
 
-## How to run everything manually
+## How to run everything manually <a name="manual-run"></a>
 First, make sure `pandas, multiprocessing, scokets, and threading` packages are installed and Python version >= 3.5.0.
 For each new experiment run, the following three commands need to be executed in the given sequence.
 
@@ -43,11 +53,14 @@ For each new experiment run, the following three commands need to be executed in
 
 This will run the clients and server in parallel to execute federated learning. 
 
-## How to run everything using automated scripts
+## How to run everything using automated scripts <a name="auto-run"></a>
 Comming soon.
 
-## To-do
+## License <a name="license"></a>
+
+## To-do 
 1. Add evaluation to be run after an experiment finishes. All the models and global as well as partitioned data will be saved. So, we can do different types of evaluations.
 2. Add hyper-parameter search.
 3. Re-organize the fedart clustering code and upload here.
 4. Add other datasets if size permits.
+5. Add scripts for running all the programs automatically
