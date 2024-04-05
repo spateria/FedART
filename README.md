@@ -9,6 +9,12 @@ Description: Federated Learning (FL) is a privacy-aware machine learning paradig
 In the following discussion, `<dataset>` is used as a placeholder for dataset name.
 - `fedart_supervised_learning` directory contains the data and source code related to supervised learning (classification).
      - `data/<dataset>` contains the dataset in .csv or .hd5 format. `data/<dataset>/prep_data.py` is used to extract data and save in the .csv file. If you add a new dataset, please implement `data/<dataset>/prep_data.py` for it.
+     - `partitioned_data/<dataset>` directory saves the data from `data/<dataset>` after it has been partitioned among different clients.
+     - `learned_models/<dataset>` directory saves the local models learned by different clients and the aggregated global model learned after federated learning.
+     - `saved_args/<dataset>` directory saves the arguments or parameters related to the given dataset.
      - `src` directory contains the federated learning code.
-       - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. Furthermore, it creates directories to save the partitioned data and models learned by clients and server. It also implements functions for evaluating the models.
-       - `setup_fl.py`
+       - `setup_fl.py` contains the arguments or parameters corresponding to different datasets. It also calls the `run_ccordinator` function to start the `experiment_coordinator` (described below).
+       - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. Furthermore, it creates the directories `partitioned_data`, `learned_models`, and `saved_args`. It saves the partitioned data and the dataset-related arguments while the models are saved later by the clients and server. It also implements functions for evaluating the models.
+       - `clients_runner.py`
+       -  `server_runner.py`
+     - `FedART` directory
