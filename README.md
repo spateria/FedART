@@ -49,3 +49,5 @@ Comming soon.
 ## To-do
 1. Add evaluation to be run after an experiment finishes. All the models and global as well as partitioned data will be saved. So, we can do different types of evaluations.
 2. Add hyper-parameter search.
+3. Re-organize the fedart clustering code and upload here.
+4. Add other datasets if size permits.
