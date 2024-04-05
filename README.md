@@ -23,6 +23,10 @@ In the following discussion, `<dataset>` is used as a placeholder for dataset na
 We use simple socket communication for bi-directional send and receive between various clients and server. The clients run in parallel using multiprocessing.
 
 ## What you need to change for your own dataset
+1. Add your dataset to the `fedart_supervised_learning/data/<dataset>` directory. Extract the data as a Pandas dataframe and save as a .csv or .hd5 file.
+2. Provide the arguments or parameters corresponding to the dataset in the `setup_fl.py` file under `get_args` function by using an _if_ statement `if args.dataset == '<dataset>'`.
+
+That's it! You are good to go!
 
 ## Dependencies
 
