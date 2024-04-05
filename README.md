@@ -29,6 +29,7 @@ We use simple socket communication for bi-directional send and receive between v
 That's it! You are good to go!
 
 ## How to run everything manually
+First, make sure `pandas, multiprocessing, scokets, and threading` packages are installed and Python version >= 3.5.0.
 For each new experiment run, the following three commands need to be executed in the given sequence.
 
 1. Open two terminals. 
