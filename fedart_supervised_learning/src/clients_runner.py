@@ -18,6 +18,7 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, default=None, help='')
+    parser.add_argument('--fl_rounds', type=str, default=None, help='')
     pa = parser.parse_args()
     
     if pa.dataset is None:

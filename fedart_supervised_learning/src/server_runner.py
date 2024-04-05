@@ -43,17 +43,19 @@ def get_models_from_clients(client_socket, client_models):
 def send_model_to_clients(client_socket, server_model):
     
     try:
-        print(f"Connected to client: {client_socket.getpeername()}")
+        #print(f"Connected to client: {client_socket.getpeername()}")
         model_data = pickle.dumps(server_model)
         client_socket.sendall(model_data)
         
     finally:
-        client_socket.close()
+        #client_socket.close()
+        pass
     
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, default=None, help='')
+    parser.add_argument('--fl_rounds', type=int, default=1, help='')
     pa = parser.parse_args()
     
     if pa.dataset is None:
@@ -76,52 +78,66 @@ if __name__ == "__main__":
         HOST = '127.0.0.1'  # Localhost
         PORT = 12345
         
-        # Create a socket object
-        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Bind the socket to the address and port
-        server_socket.bind((HOST, PORT))
-        # Listen for incoming connections
-        server_socket.listen()
-        
-        print("Server is listening...")
-        
-        # Accept connections from multiple clients
-        client_models = [None for _ in range(args.num_clients)]
-        client_threads = []
-        client_sockets = []
-        try:
-            while True:
-                client_socket, client_address = server_socket.accept()
-                client_thread = threading.Thread(target=get_models_from_clients, args=(client_socket,client_models,))
-                client_thread.start()
-                client_threads.append(client_thread)
-                client_sockets.append(client_socket)
-        
-                # Limit the number of concurrent clients
-                if len(client_threads) >= args.num_clients:
-                    break
+        for _round in range(pa.fl_rounds):
+            print(f'\n\nFL round {_round+1}')
             
-            #Run server process
-            print('Waiting to receive all data from clients...')
-            while None in client_models:
-                pass #wait
-            server.get_client_model_codes(client_models)
+            # Create a socket object
+            server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # Bind the socket to the address and port
+            server_socket.bind((HOST, PORT))
+            # Listen for incoming connections
+            server_socket.listen()
             
-            print('\nRunning server')
-            server_model = server.train()
+            print("Server is listening...")
             
-            for client_socket in client_sockets:
-                client_thread = threading.Thread(target=send_model_to_clients, args=(client_socket,server_model,))
-                client_thread.start()
-                client_threads.append(client_thread)
-
+            # Accept connections from multiple clients
+            client_models = [None for _ in range(args.num_clients)]
+            client_threads = []
+            client_sockets = []
             
-        finally:
-            # Wait for all client threads to complete
-            for thread in client_threads:
-                thread.join()
+            try:
+                #Connect to clients
+                while True:
+                    client_socket, client_address = server_socket.accept()
+                    client_sockets.append(client_socket)
+            
+                    # Limit the number of concurrent clients
+                    if len(client_sockets) >= args.num_clients:
+                        break
                 
-            server_socket.close()
+                #Get data from clients
+                for client_socket in client_sockets:
+                    client_thread = threading.Thread(target=get_models_from_clients, args=(client_socket,client_models,))
+                    client_thread.start()
+                    client_threads.append(client_thread)
+                    
+                #Run server process
+                print('\n\nWaiting to receive all data from clients...')
+                while None in client_models:
+                    pass #wait
+                server.get_client_model_codes(client_models)
+                
+                print('\n\nRunning server')
+                server_model = server.train()
+                
+                #Send new models back to the clients
+                print('\n\nSending new models back to the clients...')
+                for client_socket in client_sockets:
+                    client_thread = threading.Thread(target=send_model_to_clients, args=(client_socket,server_model,))
+                    client_thread.start()
+                    client_threads.append(client_thread)
+            
+                
+            finally:
+                for csc in client_sockets:
+                    csc.close()
+                    
+                # Wait for all client threads to complete
+                for thread in client_threads:
+                    thread.join()
+                    
+                server_socket.close()
+            
     
         
         
