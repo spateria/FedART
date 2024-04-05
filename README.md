@@ -36,7 +36,8 @@ For each new experiment run, the following three commands need to be executed in
 2. `cd src` in both terminals.
 3. In terminal 1, call `python setup_fl.py --dataset=<dataset> --split_type=<split> --random_seed=67`. The `<dataset>` name should be without quotation marks. `<split>` should be either `nonIID` or `IID`.
 4. In terminal 1, call `python server_runner.py --dataset=<dataset>`.
-5. Wait until you see "Server is listening...", then in terminal 2, call `python clients_runner.py --dataset=<dataset>`.
+5. Wait until you see "Server is listening..." in terminal 1. This means we can now start client processes.
+6. In terminal 2, call `python clients_runner.py --dataset=<dataset>`.
 
 This will run the clients and server in parallel to execute federated learning. 
 
