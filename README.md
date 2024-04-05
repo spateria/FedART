@@ -14,10 +14,10 @@ In the following discussion, `<dataset>` is used as a placeholder for dataset na
      - `saved_args/<dataset>` directory saves the arguments or parameters related to the given dataset.
      - `src` directory contains the federated learning code.
        - `setup_fl.py` contains the arguments or parameters corresponding to different datasets. It also calls the `run_ccordinator` function to start the `experiment_coordinator` (described below).
-       - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. Furthermore, it creates the directories `partitioned_data`, `learned_models`, and `saved_args`. It saves the partitioned data and the dataset-related arguments while the models are saved later by the clients and server. It also implements functions for evaluating the models.
-       - `clients_runner.py`
-       -  `server_runner.py`
-     - `FedART` directory
+       - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. This is where _nonIID_ or _IID_ partitioning happens (see `prep_client_data` function). Furthermore, it creates the directories `partitioned_data`, `learned_models`, and `saved_args`. It saves the partitioned data and the dataset-related arguments while the models are saved later by the clients and server. It also implements functions for evaluating the models.
+       - `clients_runner.py` loads the partitioned data from `partitioned_data/<dataset>` directory and runs multiple parallel client processes. The client processes connect to the server using sockets.
+       -  `server_runner.py` runs the federated learning server process. The server connects to the clients using sockets.
+     - `FedART` directory contains the implementation of the FedART server, FedART clients, and the underlying Fusion ART model (see `Base` directory).
 
 ## Communication Method
 We use simple socket communication for bi-directional send and receive between various clients and server. The clients run in parallel using multiprocessing.
@@ -28,6 +28,16 @@ We use simple socket communication for bi-directional send and receive between v
 
 That's it! You are good to go!
 
-## Dependencies
+## How to run everything manually
+For each new experiment run, the following three commands need to be executed in the given sequence.
 
-## How to run everything
+1. Open two terminals. 
+2. `cd src` in both terminals.
+3. In terminal 1, call `python setup_fl.py --dataset=<dataset> --split_type=<split> --random_seed=67`. The `<dataset>` name should be without quotation marks. `<split>` should be either `nonIID` or `IID`.
+4. In terminal 1, call `python server_runner.py --dataset=<dataset>`.
+5. Wait until you see "Server is listening...", then in terminal 2, call `python clients_runner.py --dataset=<dataset>`.
+
+This will run the clients and server in parallel to execute federated learning. 
+
+## How to run everything using automated scripts
+Comming soon.
