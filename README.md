@@ -8,4 +8,7 @@ Description: Federated Learning (FL) is a privacy-aware machine learning paradig
 ## Code Organization:
 In the following discussion, `<dataset>` is used as a placeholder for dataset name.
 - `fedart_supervised_learning` directory contains the data and source code related to supervised learning (classification).
-     - `data/<dataset>` contains the dataset in .csv or .hd5 format. `prep_data.py` is used to extract data and save in the .csv file. If you add a new dataset, please implement `prep_data.py`. 
+     - `data/<dataset>` contains the dataset in .csv or .hd5 format. `data/<dataset>/prep_data.py` is used to extract data and save in the .csv file. If you add a new dataset, please implement `data/<dataset>/prep_data.py` for it.
+     - `src` directory contains the federated learning code.
+            - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. Furthermore, it creates directories to save the partitioned data and models learned by clients and server. It also implements functions for evaluating the models.
+            - `setup_fl.py`
