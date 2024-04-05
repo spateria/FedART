@@ -6,6 +6,6 @@ Description: Federated Learning (FL) is a privacy-aware machine learning paradig
 ![FedART Federated Learning Architecture](FedART.png)
 
 ## Code Organization:
-XYZ
+In the following discussion, `<dataset>` is used as a placeholder for dataset name.
 - `fedart_supervised_learning` directory contains the data and source code related to supervised learning (classification).
-     - abc
+     - `data/<dataset>` contains the dataset in .csv or .hd5 format. `prep_data.py` is used to extract data and save in the .csv file. If you add a new dataset, please implement `prep_data.py`. 
