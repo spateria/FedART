@@ -29,7 +29,6 @@ class FedARTServer(FedARTBase):
         
         self.itrs = args.server_iterations
         self.match_tracking = args.use_match_tracking_server
-        self.use_complement_coding = True
 
         self.client_codes = None
         
