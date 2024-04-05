@@ -18,3 +18,12 @@ In the following discussion, `<dataset>` is used as a placeholder for dataset na
        - `clients_runner.py`
        -  `server_runner.py`
      - `FedART` directory
+
+## Communication Method
+We use simple socket communication for bi-directional send and receive between various clients and server. The clients run in parallel using multiprocessing.
+
+## What you need to change for your own dataset
+
+## Dependencies
+
+## How to run everything
