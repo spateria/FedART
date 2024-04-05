@@ -6,5 +6,6 @@ Description: Federated Learning (FL) is a privacy-aware machine learning paradig
 ![FedART Federated Learning Architecture](FedART.png)
 
 ## Code Organization:
+XYZ
 - `fedart_supervised_learning` directory contains the data and source code related to supervised learning (classification).
      - 
