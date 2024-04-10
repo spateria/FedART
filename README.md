@@ -53,6 +53,11 @@ For each new experiment run, the following three commands need to be executed in
 
 This will run the clients and server in parallel to execute federated learning. 
 
+During the execution, following records are kept:
+1. The global and partitioned client data is saved in the directory `partitioned_data/<dataset>`.
+2. The learned server and client models are saved in the directory `learned_models/<dataset>`.
+3. The dataset-specific arguments or parameters are saved in the directory `saved_args/<dataset>`. This is meant for running server and clients multiple times for different experiment trials without having to rerun `setup_fl.py`.
+
 ## How to run everything using automated scripts <a name="auto-run"></a>
 Comming soon.
 
