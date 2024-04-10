@@ -26,7 +26,7 @@ In the following discussion, `<dataset>` is used as a placeholder for dataset na
      - `saved_args/<dataset>` directory saves the arguments or parameters related to the given dataset.
      - `src` directory contains the federated learning code.
        - `setup_fl.py` contains the arguments or parameters corresponding to different datasets. It also calls the `run_ccordinator` function to start the `experiment_coordinator` (described below).
-       - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. This is where _nonIID_ or _IID_ partitioning happens (see `prep_client_data` function). Furthermore, it creates the directories `partitioned_data`, `learned_models`, and `saved_args`. It saves the partitioned data and the dataset-related arguments while the models are saved later by the clients and server. It also implements functions for evaluating the models.
+       - `experiment_coordinator.py` contains code for loading data from `data/<dataset>`, normalizing it, partitioning it among different clients, doing train-test splits, and preparing data for global testing and training a baseline non-FL centralized model. This is where _nonIID_ or _IID_ partitioning happens (see `prep_client_data` function). Furthermore, it creates the directories `partitioned_data`, `learned_models`, `evaluation_results`, and `saved_args`. It saves the partitioned data and the dataset-related arguments while the models are saved later by the clients and server. It also implements functions for evaluating the models.
        - `clients_runner.py` loads the partitioned data from `partitioned_data/<dataset>` directory and runs multiple parallel client processes. The client processes connect to the server using sockets.
        -  `server_runner.py` runs the federated learning server process. The server connects to the clients using sockets.
      - `FedART` directory contains the implementation of the FedART server, FedART clients, and the underlying Fusion ART model (see `Base` directory).
@@ -74,6 +74,7 @@ During the execution, following records are kept:
 1. The global and partitioned client data is saved in the directory `partitioned_data/<dataset>`.
 2. The learned server and client models are saved in the directory `learned_models/<dataset>`.
 3. The dataset-specific arguments or parameters are saved in the directory `saved_args/<dataset>`. This is meant for running server and clients multiple times for different experiment trials without having to rerun `setup_fl.py`.
+4. The model evaluation results are saved in `evaluation_results/<dataset>`.
 
 ## How to run everything using automated scripts <a name="auto-run"></a>
 Comming soon.
