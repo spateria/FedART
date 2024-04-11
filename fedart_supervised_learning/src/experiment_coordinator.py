@@ -10,6 +10,7 @@ import pandas as pd
 import sys, os
 import copy
 import pickle
+import csv
 from sklearn.metrics import classification_report, accuracy_score
 
 from sklearn.preprocessing import MinMaxScaler
@@ -244,6 +245,11 @@ class ExperimentCoordinator:
             os.makedirs(dr)
         with open(dr + '/args.pkl', 'wb') as f:
             pickle.dump(self.args, f)
+            
+        #save evalution results after federated learning
+        dr = '../evaluation_results/' + self.dataset
+        if not os.path.exists(dr):
+            os.makedirs(dr)
             
     def save_fl_data(self):
         

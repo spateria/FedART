@@ -72,7 +72,7 @@ if __name__ == "__main__":
             data_pkg = pickle.load(f)
             
         print('\nCreating Server')
-        server = FedARTServer(args.num_clients, data_pkg, args)
+        server = FedARTServer(args.num_clients, data_pkg, args, pa.fl_rounds)
 
         # Server configuration
         HOST = '127.0.0.1'  # Localhost
