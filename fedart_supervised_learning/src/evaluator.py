@@ -135,6 +135,7 @@ class Evaluator:
         df = pd.read_csv(self.res_file)
         df = df.groupby('fl_rounds').mean()
         df.drop('random_seed', axis=1, inplace=True)
+        print('\nFinal Results averaged across multiple runs:')
         print(df)
     
 if __name__ == "__main__":

@@ -146,7 +146,7 @@ if __name__ == "__main__":
                 server_socket.close()
             
     
-        
+        e.aggregate()
         
         
     
