@@ -11,6 +11,7 @@ import socket, threading
 import time
 
 from FedART.fedserver import FedARTServer
+from evaluator import Evaluator
 
 #client_models = []
 #server_model = None
@@ -70,7 +71,9 @@ if __name__ == "__main__":
         
         with open(data_dir + '/server_data/data.pkl', 'rb') as f:
             data_pkg = pickle.load(f)
-            
+        
+        e = Evaluator(pa.dataset, args)
+        
         print('\nCreating Server')
         server = FedARTServer(args.num_clients, data_pkg, args, pa.fl_rounds)
 
@@ -127,6 +130,10 @@ if __name__ == "__main__":
                     client_thread.start()
                     client_threads.append(client_thread)
             
+                e.evaluate(print_results=True, at_round=_round+1) #+1 because _round starts at 0
+                print('Evaluation done')
+                
+                #time.sleep(10)
                 
             finally:
                 for csc in client_sockets:
