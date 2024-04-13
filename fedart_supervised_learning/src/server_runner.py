@@ -130,7 +130,7 @@ if __name__ == "__main__":
                     client_thread.start()
                     client_threads.append(client_thread)
             
-                e.evaluate(print_results=True, at_round=_round+1) #+1 because _round starts at 0
+                e.evaluate(print_results=False, at_round=_round+1) #+1 because _round starts at 0
                 print('Evaluation done')
                 
                 #time.sleep(10)
