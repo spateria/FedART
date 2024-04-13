@@ -82,7 +82,7 @@ Comming soon.
 ## License <a name="license"></a>
 
 ## To-do 
-2. Add hyper-parameter search.
-3. Re-organize the fedart clustering code and upload here.
-4. Add other datasets if size permits.
-5. Add scripts for running all the programs automatically
+- Add hyper-parameter search.
+- Re-organize the fedart clustering code and upload here.
+- Add other datasets if size permits.
+- Add scripts for running all the programs automatically
