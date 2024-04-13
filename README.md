@@ -82,7 +82,6 @@ Comming soon.
 ## License <a name="license"></a>
 
 ## To-do 
-1. Add run_id to the evaluation results (csv) dataframe. We can then group the rows by the fl round number and average the results across dufferent runs (run_id) within each group.
 2. Add hyper-parameter search.
 3. Re-organize the fedart clustering code and upload here.
 4. Add other datasets if size permits.
